@@ -51,6 +51,17 @@ ops.forEach(op => {
     })
 });
 
+//Function to clear the display for the result,move the operation to the top display & display temp result
+function manipulateDisplays(opName=''){
+    num1 += num2 + ' ' + opName + ' ';
+    displayOp.textContent = num1;
+    //Clear display for result
+    displayResult.textContent = '';
+    num2 = '';
+    displayTemp.textContent = result;
+}
+
+
 
 
 //Addition
