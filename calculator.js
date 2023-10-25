@@ -61,7 +61,10 @@ function manipulateDisplays(opName=''){
     displayTemp.textContent = result;
 }
 
-
+function calculate(){
+    result = operate(lastOp,result,num2);
+    
+}
 
 
 //Addition
