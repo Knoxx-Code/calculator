@@ -1,4 +1,58 @@
 
+
+const displayOp = document.querySelector('.display-operation');
+const displayResult = document.querySelector('.display-result');
+const displayTemp = document.querySelector('.display-temp');
+
+const nums = document.querySelectorAll('.num');
+const ops = document.querySelectorAll('.operator');
+
+const eq = document.querySelector('.equal');
+const clearAll = document.querySelector('.clear-all');
+const del = document.querySelector('.delete');
+
+let num1 = '';
+let num2 = '';
+let result = null;
+let lastOp = '';
+let isDecimal = false; 
+
+
+nums.forEach(num=>{
+    num.addEventListener('click',(e)=>{
+        
+        //Prevent user from having more than 1 decimal point
+        if(e.target.textContent === '.' && !isDecimal){
+            isDecimal = true;
+        } else if(e.target.textContent === '.' && isDecimal){
+            return;
+        }
+        num2 += e.target.textContent;
+        displayResult.textContent = num2;
+    })
+});
+
+ops.forEach(op => {
+    op.addEventListener('click',(e)=>{
+        //Prevent user from having an operation without a number or entering just a decimal point
+        if(!num2 || num2==='.') return;
+        //Change this to false since after an operator is added a new number can have a decimal
+        isDecimal = false;
+        const opName = e.target.textContent;
+        //Check if all operators for a calculation are present i.e num1, op and num2
+        if(num1 && num2 && lastOp){
+            calculate();
+        } else {
+            result = parseFloat(num2);
+        }
+        manipulateDisplays(opName);
+        lastOp = opName;
+        console.log(result);
+    })
+});
+
+
+
 //Addition
 function add(a,b){
     return a + b;
