@@ -24,3 +24,25 @@ function modulus(a,b){
     return a % b ;
 }
 
+function operate(op,n1,n2){
+    n1 = parseFloat(n1);
+    n2 = parseFloat(n2);
+
+    switch(op){
+        case '+':
+            return add(n1,n2);
+            break;
+        case '-':
+            return subtract(n1,n2);
+            break;
+        case 'x':
+            return multiply(n1,n2);
+            break;
+        case '/':
+            if (n2 === 0) return 'Math Error'
+             else{return divide(n1,n2);}
+             break;
+        case '%':
+            return modulus(n1,n2);     
+    }
+}
