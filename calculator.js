@@ -83,7 +83,7 @@ function buttonActions(){
 
     //Actions for delete
     del.addEventListener('click',(e)=>{
-        if(!num2) return;
+        if(!num2 || result === 'Math Error') return;
         //Delete last element from num2
         num2 = num2.slice(0,-1);
         displayResult.textContent = num2;
@@ -105,7 +105,10 @@ function buttonActions(){
         } 
         //Equals sign
         else if (e.key === '='){
-                keyboardButtons(e.key);
+            keyboardButtons(e.key);
+        //Backspace key 
+        } else if (e.key === 'Backspace'){
+            keyboardButtons(e.key);
         }
     });
 
@@ -124,6 +127,11 @@ function manipulateDisplays(opName=''){
 //Calculates the result
 function calculate(){
     result = operate(lastOp,result,num2);
+
+    //Return math error if result is null
+    if(result === null){
+        result = 'Math Error';
+    }
     
 }
 
@@ -144,6 +152,10 @@ function keyboardButtons(key)
 
     if(eq.textContent === key){
         eq.click();
+    }
+
+    if(key === 'Backspace'){
+        del.click();
     }
 }
 
@@ -172,6 +184,7 @@ function modulus(a,b){
     return a % b ;
 }
 
+//Checks which operator has been selected and chooses the appropriate operation
 function operate(op,n1,n2){
     n1 = parseFloat(n1);
     n2 = parseFloat(n2);
@@ -187,7 +200,7 @@ function operate(op,n1,n2){
             return multiply(n1,n2);
             break;
         case '/':
-            if (n2 === 0) return 'Math Error'
+            if (n2 === 0) return null
              else{return divide(n1,n2);}
              break;
         case '%':
