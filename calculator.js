@@ -90,6 +90,25 @@ function buttonActions(){
 
         
     })
+
+    //Allows keyboard input for numbers and operators
+    window.addEventListener('keydown',(e)=>{
+        //Check to ensure only numbers are pressed
+        if(/[\d.]/.test(e.key)){
+                keyboardButtons(e.key);
+        //Check the various operators are pressed
+        } else if(/[+\-%/]/.test(e.key)){
+                keyboardButtons(e.key);
+        //Multiplication sign needs to be changed to fit implementation
+        } else if (e.key === '*'){
+            keyboardButtons('x');
+        } 
+        //Equals sign
+        else if (e.key === '='){
+                keyboardButtons(e.key);
+        }
+    });
+
 }
 
 //Function to clear the display for the result,move the operation to the upper display & display temp result
@@ -108,9 +127,25 @@ function calculate(){
     
 }
 
+//Function that handles the selection of number/operator based on keyboard input
+function keyboardButtons(key)
+{
+    nums.forEach(num =>{
+        if (num.textContent === key){
+            num.click();
+        }
+    })
 
+    ops.forEach(op=>{
+        if(op.textContent === key){
+            op.click();
+        }
+    })
 
-
+    if(eq.textContent === key){
+        eq.click();
+    }
+}
 
 //Addition
 function add(a,b){
