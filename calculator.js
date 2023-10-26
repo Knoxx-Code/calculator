@@ -17,7 +17,7 @@ let result = null;
 let lastOp = '';
 let isDecimal = false; 
 
-
+//Function that handles all actions when a button is pressed
 function buttonActions(){
     //Actions for when a number is clicked
     nums.forEach(num=>{
@@ -53,8 +53,44 @@ function buttonActions(){
             console.log(result);
         })
     });
-    
-    }
+
+    //Actions for when equals is pressed
+    eq.addEventListener('click',(e)=>{
+        //Check if there is a math operation present
+        if(!displayOp || !displayResult) return;
+        //Showing result
+        isDecimal = false;
+        calculate();
+        manipulateDisplays();
+        displayResult.textContent = result;
+        //Clear temp result display
+        displayTemp.textContent = '';
+        //Set num2 to be value of result to allow further calculation on the result
+        num2 = result;
+        num1 = '';
+    });
+
+    //Actions for clearing the screen
+    clearAll.addEventListener('click',(e)=>{
+        displayOp.textContent = '0';
+        displayResult.textContent = '0';
+        displayTemp.textContent = '0';
+        num1 = '';
+        num2 = '';
+        result = '';
+
+    });
+
+    //Actions for delete
+    del.addEventListener('click',(e)=>{
+        if(!num2) return;
+        //Delete last element from num2
+        num2 = num2.slice(0,-1);
+        displayResult.textContent = num2;
+
+        
+    })
+}
 
 //Function to clear the display for the result,move the operation to the upper display & display temp result
 function manipulateDisplays(opName=''){
@@ -71,21 +107,6 @@ function calculate(){
     result = operate(lastOp,result,num2);
     
 }
-
-eq.addEventListener('click',(e)=>{
-    //Check if there is a math operation present
-    if(!displayOp || !displayResult) return;
-    //Showing result
-    isDecimal = false;
-    calculate();
-    manipulateDisplays();
-    displayResult.textContent = result;
-    //Clear temp result display
-    displayTemp.textContent = '';
-    //Set num2 to be value of result to allow further calculation on the result
-    num2 = result;
-    num1 = '';
-});
 
 
 
@@ -138,3 +159,6 @@ function operate(op,n1,n2){
             return modulus(n1,n2);     
     }
 }
+
+
+buttonActions();
